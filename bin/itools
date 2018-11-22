@@ -4,10 +4,7 @@ require 'itools'
 
 include GLI::App
  
-
-
 program_desc 'a collection of tools for ios developer'
-
 version Itools::VERSION
 
 desc "Analyze the memory footprint of each part or component in Xcode project"
@@ -17,3 +14,5 @@ command :parse do |c|
          Itools::LinkMap.parser(args[0])
     end
 end
+
+exit run(ARGV)
