@@ -34,4 +34,4 @@ Total Size：10.07KB
 For more information, see：[https://www.cnblogs.com/zhanggui/p/9991455.html](https://www.cnblogs.com/zhanggui/p/9991455.html)
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/itools. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the 
+Bug reports and pull requests are welcome on GitHub at https://github.com/ScottZg/itools. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the 
