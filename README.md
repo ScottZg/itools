@@ -21,14 +21,35 @@ Or install it yourself as:
     $ gem install itools
 
 ## Usage
+```shell
+$:gem install itools
+$:itools
 
-TODO: Write usage instructions here
+NAME
+    itools - a collection of tools for ios developer
 
-## Development
+SYNOPSIS
+    itools [global options] command [command options] [arguments...]
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+VERSION
+    0.1.2
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+GLOBAL OPTIONS
+    --help    - Show this message
+    --version - Display the program version
+
+COMMANDS
+    help  - Shows a list of commands or help for one command
+    parse - Analyze the memory footprint of each part or component in Xcode project
+
+```
+
+Demo
+```shell
+itools parse  LinkMapDemo-LinkMap-normal-arm64.txt  #link map file's name
+# or
+itools parse /user/Desk/LinkMapDemo-LinkMap-normal-arm64.txt
+```
 
 ## Contributing
 
