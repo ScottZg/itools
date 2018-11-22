@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 require 'gli'
-# require 'itools'
+require 'itools'
 
 include GLI::App
  
@@ -14,6 +14,6 @@ desc "Analyze the memory footprint of each part or component in Xcode project"
 arg 'xxx.txt'
 command :parse do |c|
     c.action do |global_options, options, args|
-        #  Itools::LinkMap.parser(args[0])
+         Itools::LinkMap.parser(args[0])
     end
 end

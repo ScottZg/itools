@@ -6,6 +6,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    gli (2.18.0)
     rake (10.4.2)
 
 PLATFORMS
@@ -13,6 +14,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.17)
+  gli (~> 2.17)
   itools!
   rake (~> 10.0)
 
