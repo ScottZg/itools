@@ -12,33 +12,26 @@ gem install itools
 ```
 
 ## Usage
+### First Step
+Open Xcode Write Link Map File Setting to YES for getting the Link Map File.
+### Second Step
 ```shell
-$: itools
-
-NAME
-    itools - a collection of tools for ios developer
-
-SYNOPSIS
-    itools [global options] command [command options] [arguments...]
-
-VERSION
-    0.1.2
-
-GLOBAL OPTIONS
-    --help    - Show this message
-    --version - Display the program version
-
-COMMANDS
-    help  - Shows a list of commands or help for one command
-    parse - Analyze the memory footprint of each part or component in Xcode project
-
-```
-
-Demo
-```shell
-itools parse  LinkMapDemo-LinkMap-normal-arm64.txt  #link map file's name
+#link map file's name
+itools parse  LinkMapDemo-LinkMap-normal-arm64.txt  
 # or
 itools parse /user/Desk/LinkMapDemo-LinkMap-normal-arm64.txt
+```
+The result is:
+```ruby
+AppDelegate.o          8.50KB
+ViewController.o          735B
+LinkMapDemo.app-Simulated.xcent          386B
+main.o          192B
+ linker synthesized          128B
+libobjc.tbd          120B
+Foundation.tbd          24B
+UIKit.tbd          24B
+Total Size：10.07KB
 ```
 
 ## Contributing
