@@ -6,24 +6,14 @@ TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
-Add this line to your application's Gemfile:
 
 ```ruby
-gem 'itools'
+gem install itools
 ```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install itools
 
 ## Usage
 ```shell
-$:gem install itools
-$:itools
+$: itools
 
 NAME
     itools - a collection of tools for ios developer
