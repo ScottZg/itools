@@ -1,6 +1,6 @@
 # itools
 
-a iOS developer tool.
+a iOSer's tool.
 
 ## Installation
 
@@ -34,12 +34,4 @@ Total Size：10.07KB
 For more information, see：[https://www.cnblogs.com/zhanggui/p/9991455.html](https://www.cnblogs.com/zhanggui/p/9991455.html)
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/itools. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-
-## Code of Conduct
-
-Everyone interacting in the Itools project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/itools/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/itools. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the 
