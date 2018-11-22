@@ -201,7 +201,7 @@ module Itools
             puts "\033[32m--------------------------------\033[0m"  
 
             # 判断文件是否存在
-            save_file_path = SizeResult.getSaveFileName
+            save_file_path = SizeResult.getSaveFileName(path_para)
             if File.exist?(save_file_path)
                 File.delete(save_file_path)
             end
