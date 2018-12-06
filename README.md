@@ -57,22 +57,27 @@ For more information, see：[https://www.cnblogs.com/zhanggui/p/9991455.html](ht
 ```ruby
 itools search folder/file str/strs
 ```
-例如：
-1.单字符查找：查找number.txt中包含7的行
+例如：  
+1.单字符查找：查找number.txt中包含7的行  
 ```ruby 
 itools search number.txt 7
 ```
-将会把number.txt中包含7的行输出，内容包括：文件名（这里是number.txt）、包含字符串（这里是7）、文件所在目录、查找内容所在行、查找结果
-2.多字符查找：查找number.txt中包含7，8的行
+将会把number.txt中包含7的行输出，内容包括：文件名（这里是number.txt）、包含字符串（这里是7）、文件所在目录、查找内容所在行、查找结果  
+2.多字符查找：查找number.txt中包含7，8的行  
 ```ruby
 itools search number.txt 7,8
 ```
-将会把number.txt中包含7、8的行记录到excel表中，表内容和上面的展示一样。
-3.文件夹所有文件查找某个字符串：
+将会把number.txt中包含7、8的行记录到excel表中，表内容和上面的展示一样。  
+3.在文件夹所有文件中查找某个字符串：  
 ```ruby
 itools search /Users/zhanggui/zhanggui/my-dev MAYGO
 ```
-将会把/Users/zhanggui/zhanggui/my-dev文件夹中所有的文件进行遍历，然后找到包含MAYGO字符串的类，并生成excel文件。
+将会把/Users/zhanggui/zhanggui/my-dev文件夹中所有的文件进行遍历，然后找到包含MAYGO字符串的类，并生成excel文件。  
+4.在文件夹所有文件文件中查找某些字符串：
+```ruby
+itools search /Users/zhanggui/zhanggui/Ruby/ 3434,Scott
+```
+将会在/Users/zhanggui/zhanggui/Ruby/中查找所有包含3434和Scott的文件，并生成excel。
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/ScottZg/itools. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the 
