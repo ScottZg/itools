@@ -2,7 +2,7 @@ require 'find'
 require 'spreadsheet'
 module Itools
    class ImgFinder
-      attr_accessor :image_count, :image_names, :unuse_images
+      attr_accessor :image_count, :image_names, :unuse_images,:find_path
       attr_accessor :search_files
       def initialize
          @image_count = 0
@@ -21,6 +21,7 @@ module Itools
       # 查找
       def self.find(temp_find_dir)
          imgFinder = ImgFinder.new
+         imgFinder.find_path = temp_find_dir
          # 第一步：找到该文件夹下所有的图片文件
          Find.find(temp_find_dir) do |filename|
             if File.file?(filename)   #如果是文件，则从文件中查找，忽略文件夹
@@ -29,7 +30,7 @@ module Itools
                   # exit
                   imgFinder.image_count = imgFinder.image_count + 1
                   imgFinder.image_names << filename
-               else
+               elsif File.extname(filename).eql?(".m")
                   imgFinder.search_files << filename
                end
             end
@@ -42,20 +43,9 @@ module Itools
          end
          # 第二步：找到图片是否使用
          imags = imgFinder.get_img_name_strs.uniq   #要查找的图片名称数组
-
-        #  Spreadsheet.client_encoding = 'utf-8'
-        #  book = Spreadsheet::Workbook.new
-        #  sheet1 = book.create_worksheet
-        #  sheet1.row(0)[0] = "文件名"
-        #  imags.each_with_index {|item,index|
-        #     sheet1.row(index+1)[0] = item
-        # }
-        # book.write "/Users/zhanggui/Desktop/search_result.xls"
-        # puts "temp"
-        # exit
          
-        puts "\033[32m共有图片#{imags.size}张\033[0m"
-         imgFinder.search_files   #要查找的文件
+        puts "\033[32m需要查找的图片有#{imags.size}张\033[0m"
+        #  imgFinder.search_files   #要查找的文件
          imgFinder.search_files.each {|file|
             File.read(file).each_line do |line|
                 haveStr = StringHandle.containsStr(line,imags)
@@ -66,8 +56,17 @@ module Itools
             end
          }
          puts "\033[32m无用图片#{imags.size}张,图片名称如下:\033[0m"
-         puts imags
-
+        Spreadsheet.client_encoding = 'utf-8'
+         book = Spreadsheet::Workbook.new
+         sheet1 = book.create_worksheet
+         sheet1.row(0)[0] = "文件名"
+         imags.each_with_index {|item,idx|
+            sheet1.row(idx+1)[0] = item
+            puts item
+        }
+         book.write "#{imgFinder.find_path}/search_result.xls"
+         puts "\033[32m文件已经保存到#{imgFinder.find_path}/search_result.xls\033[0m"
+         puts "\033[32m内容仅供参考，具体还要自己通过结果查看一下\033[0m"
       end
    end
    # 字符串操作类
