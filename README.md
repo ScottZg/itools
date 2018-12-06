@@ -62,7 +62,7 @@ itools search folder/file str/strs
 ```ruby 
 itools search number.txt 7
 ```
-将会把number.txt中包含7的行输出，内容包括：文件名（这里是number.txt）、包含字符串（这里是7）、文件所在目录、查找内容所在行、查找结果。
+将会把number.txt中包含7的行输出，内容包括：文件名（这里是number.txt）、包含字符串（这里是7）、文件所在目录、查找内容所在行、查找结果。    
 2.多字符查找：查找number.txt中包含7，8的行  
 ```ruby
 itools search number.txt 7,8
