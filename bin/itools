@@ -22,4 +22,12 @@ command :search do |c|
          Itools::StringSearcher.search_result(args[0],args[1])
     end
 end
+# 查找工程中没有用到的图片
+desc "search unuse image"
+arg 'xxx.txt'
+command :find do |c|
+    c.action do |global_options, options, args|
+         Itools::ImgFinder.find(args[0])
+    end
+end
 exit run(ARGV)

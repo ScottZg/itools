@@ -115,11 +115,15 @@ module Itools
             sheet1.row(i+1)[1] = item.key_str
             sheet1.row(i+1)[2] = File.dirname(item.file_name)
             sheet1.row(i+1)[3] = item.in_line
-            sheet1.row(i+1)[4] = item.result_str
+            sheet1.row(i+1)[4] = item.result_str            
+            if i < 10
+               puts "#{item.key_str} is in file：#{File.basename(item.file_name)} and Inline：#{item.in_line}"
+            end
+            
          end
 
          puts "\033[32m查找成功,内容已经保存到#{File.dirname(searcher.search_in)}，请点击查看\033[0m"
-         book.write "#{File.dirname(searcher.search_in)}/find_result.xls"
+         book.write "#{File.dirname(searcher.search_in)}/search_result.xls"
       end
    end
 end
