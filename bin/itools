@@ -15,4 +15,11 @@ command :parse do |c|
     end
 end
 
+desc "search str(or strs) in some file(or folder's file)"
+arg 'xxx.txt'
+command :search do |c|
+    c.action do |global_options, options, args|
+         Itools::StringSearcher.search_result(args[0],args[1])
+    end
+end
 exit run(ARGV)

@@ -1,13 +1,16 @@
 PATH
   remote: .
   specs:
-    itools (0.1.2)
+    itools (0.1.3)
 
 GEM
   remote: https://rubygems.org/
   specs:
     gli (2.18.0)
     rake (10.4.2)
+    ruby-ole (1.2.12.1)
+    spreadsheet (1.1.8)
+      ruby-ole (>= 1.0)
 
 PLATFORMS
   ruby
@@ -17,6 +20,7 @@ DEPENDENCIES
   gli (~> 2.17)
   itools!
   rake (~> 10.0)
+  spreadsheet (~> 1.1.8)
 
 BUNDLED WITH
    1.17.1
