@@ -28,20 +28,11 @@ module Itools
                 if File.file?(filename)
                     sum = sum + File.size(filename)
                     file_count = file_count + 1
-                    puts "#{File.basename(filename)}的大小为：#{get_show_size(File.size(filename))}"
+                    # puts "#{File.basename(filename)}的大小为：#{get_show_size(File.size(filename))}"
                 end
             end
             puts "\033[32m文件夹中共#{file_count}个文件，共占用内存大小为：#{get_show_size(sum)}.\033[0m"
             # puts `du -b #{folder} | awk '{print $1}'`.to_i 
-        end
-        # 对外暴露方法
-        def self.sizeFor(file)
-            if file.nil?
-                puts "\033[31m参数异常，请传入一个参数\033[0m"
-                return
-            end
-            memory = Memory.new
-            memory.hand_cal_size(file)
         end
         # get_show_size 
         def get_show_size(size)
@@ -52,6 +43,15 @@ module Itools
              else
                 return size.to_s + "B"
              end
+        end
+         # 对外暴露方法
+         def self.sizeFor(file)
+            if file.nil?
+                puts "\033[31m参数异常，请传入一个参数\033[0m"
+                return
+            end
+            memory = Memory.new
+            memory.hand_cal_size(file)
         end
     end
 end
