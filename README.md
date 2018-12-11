@@ -94,7 +94,7 @@ itools find /Users/zhanggui/zhanggui/tdp
 ```
  itools sizeFor /Users/zhanggui/zhanggui/my 1000(or 1024)
 ```
-计算sizeFor后面跟的参数内容所占内存大小，如果参数为文件路径，则计算文件大小，如果是文件夹，会遍历所有文件，然后计算大小。第二个参数为计算系数（windows为1024，mac为1000，不传默认为1024）
+计算sizeFor后面跟的参数内容所占内存大小，如果参数为文件路径，则计算文件大小，如果是文件夹，会遍历所有文件，然后计算大小。第二个参数为计算系数（这个系数为1MB = 1024KB中的1024；windows为1024，mac为1000，不传默认为1024）
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/ScottZg/itools. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the 
