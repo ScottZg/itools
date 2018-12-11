@@ -1,22 +1,39 @@
 require 'find'
 require 'spreadsheet'
 module Itools
+   class FindResult
+      attr_accessor :name , :path
+      def initialize(name,path)
+         @name = name
+         @path = path
+      end
+
+   end
+   # --------------------------------------------
    class ImgFinder
-      attr_accessor :image_count, :image_names, :unuse_images,:find_path
+      # 
+      attr_accessor :image_count, :images, :unuse_images,:find_path
       attr_accessor :search_files
       def initialize
          @image_count = 0
-         @image_names = []
+         @images = []
          @search_files = []
       end
       # 得到所有图片名称字符
       def get_img_name_strs
          result_arr = []
-         @image_names.each {|item|
-            item_name = Image.get_image_name(File.basename(item, ".*"))
+         @images.each {|item|
+            item_name = Image.get_image_name(File.basename(item.name, ".*"))
             result_arr << item_name
          }
          return result_arr
+      end
+      def get_image_path(image)
+         @images.each {|item|
+            if item.name.eql?(image)
+               return item.path
+            end
+         }
       end
       # 查找
       def self.find(temp_find_dir)
@@ -29,21 +46,22 @@ module Itools
                   # p File.basename(filename)
                   # exit
                   imgFinder.image_count = imgFinder.image_count + 1
-                  imgFinder.image_names << filename
+                  imageResult = FindResult.new(Image.get_image_name(File.basename(filename,".*")),filename)
+                  imgFinder.images << imageResult
                elsif File.extname(filename).eql?(".m")
                   imgFinder.search_files << filename
                end
             end
          end
-         if imgFinder.image_names.size == 0
+         if imgFinder.images.size == 0
             puts "\033[32m查找成功,未发现图片\033[0m"
             return
          else
-            puts "\033[32m查找成功,共发现图片#{imgFinder.image_names.size}张\033[0m"
+            puts "\033[32m查找成功,共发现图片#{imgFinder.images.size}张\033[0m"
          end
          # 第二步：找到图片是否使用
          imags = imgFinder.get_img_name_strs.uniq   #要查找的图片名称数组
-         
+
         puts "\033[32m需要查找的图片有#{imags.size}张\033[0m"
         #  imgFinder.search_files   #要查找的文件
          imgFinder.search_files.each {|file|
@@ -60,8 +78,10 @@ module Itools
          book = Spreadsheet::Workbook.new
          sheet1 = book.create_worksheet
          sheet1.row(0)[0] = "文件名"
+         sheet1.row(0)[1] = "文件路径"
          imags.each_with_index {|item,idx|
             sheet1.row(idx+1)[0] = item
+            sheet1.row(idx+1)[1] = imgFinder.get_image_path(item)
             puts item
         }
          book.write "#{imgFinder.find_path}/search_result.xls"
@@ -81,6 +101,7 @@ module Itools
         return -1
      end
    end
+   # ----------------------------
    class Image
 
       # 是否是图片格式,这里只判断了jpg、png和gif
