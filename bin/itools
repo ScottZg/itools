@@ -30,4 +30,12 @@ command :find do |c|
          Itools::ImgFinder.find(args[0])
     end
 end
+# 计算占用内存大小
+desc "calculate the memory footprint of file or folder(contain file)"
+arg 'xxx.txt'
+command :sizeFor do |c|
+    c.action do |global_options, options, args|
+         Itools::Memory.sizeFor(args[0])
+    end
+end
 exit run(ARGV)
