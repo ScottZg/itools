@@ -52,6 +52,7 @@ module Itools
       def search_in_file(temp_file)
          line_index = 1
          File.read(temp_file).each_line do |line|
+            puts line 
             haveIndex = StringHandle.containsStr(line,@search_strs)
             if haveIndex != -1
                search_result = SearchResult.new(temp_file,line_index,line,@search_strs[haveIndex])
