@@ -1,8 +1,16 @@
 require 'find'
 module Itools
     class Memory
+        attr_accessor :pro
         # 分发吹
-        def hand_cal_size(file)
+        def hand_cal_size(file,prop)
+            if prop.nil?
+                @pro = 1024
+            elsif prop == 0
+                @pro = 1024
+            else
+                @pro = prop
+            end
             handle_method = ''
             if File.file?(file)
                 puts "\033[32m开始计算文件的大小...\033[0m"
@@ -36,22 +44,24 @@ module Itools
         end
         # get_show_size 
         def get_show_size(size)
-            if size > 1024 * 1024
-                return format("%.2f",(size.to_f/(1024*1024))) + "MB"
-             elsif size > 1024
-                return format("%.2f",(size.to_f/1024)) + "KB"
+            if size > @pro * @pro
+                return format("%.2f",(size.to_f/(@pro*@pro))) + "MB"
+             elsif size > @pro
+                return format("%.2f",(size.to_f/@pro)) + "KB"
              else
                 return size.to_s + "B"
              end
         end
          # 对外暴露方法
-         def self.sizeFor(file)
+         def self.sizeFor(proport)
+            file = proport[0]
+            pro = proport[1].to_i
             if file.nil?
                 puts "\033[31m参数异常，请传入一个参数\033[0m"
                 return
             end
             memory = Memory.new
-            memory.hand_cal_size(file)
+            memory.hand_cal_size(file,pro)
         end
     end
 end
