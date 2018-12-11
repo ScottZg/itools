@@ -140,13 +140,13 @@ module Itools
             puts "请按照如下命令执行该脚本："
             puts "\033[31mruby linkMapParse.rb **.txt \033[0m"
             puts "**指代Link Map File的名字，例如LinkMapApp-LinkMap-normal-x86_64.txt"
-            exit
+            return
          end
          if File.exist?(link_map_file_name)
             puts "\033[32m获取LinkMap文件: #{link_map_file_name}成功，开始分析数据...\033[0m"
          else
             puts "\033[31m#{link_map_file_name}文件不存在，请重新输入文件 \033[0m"
-            exit
+            return
          end
 
          link_map = LinkMap.new(link_map_file_name)

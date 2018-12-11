@@ -45,7 +45,7 @@ module Itools
             self.send(handle_method,@search_in)
          else
             puts "\033[31m文件不存在，请检查输入是否正确\033[0m"
-            exit
+            return
          end
       end
       # 从文件查找
@@ -88,18 +88,18 @@ module Itools
       def self.search_result(temp_search_in,temp_search_strs)
          if temp_search_in.nil? 
             puts "\033[31m传入的参数有误，第一个参数为要搜索的文件或者文件夹名称，第二个参数为要搜索的字符串(如要查找多个str使用英文,分割),两个参数中间用空格区分\033[0m"
-            exit
+            return
          end
          if temp_search_strs.nil?
             puts "\033[31m传入的参数有误，第一个参数为要搜索的文件或者文件夹名称，第二个参数为要搜索的字符串(如要查找多个str使用英文,分割),两个参数中间用空格区分\033[0m"
-            exit
+            return
          end
          # 传入的可能是字符串数组
          searcher = StringSearcher.new(temp_search_strs.split(","),temp_search_in)
          searcher.search
          if searcher.result.size == 0
             puts "\033[32m没有找到相关字段\033[0m"
-            exit
+            return
          end
          # 输出搜索的内容
          Spreadsheet.client_encoding = 'utf-8'
