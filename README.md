@@ -89,6 +89,12 @@ itools find /Users/zhanggui/zhanggui/tdp
 先将目录下面所有的图片（仅支持png、jpg、gif）找到，然后遍历所有.m文件。查找出没有使用的图片。   
 **注：这里查找不太准确，仅供参考，因为有可能有的图片不是通过.m文件使用的。而有的图片仅仅是为了配置（例如1024*1024），所以还是不要依赖该工具的图片查找，找到之后可以自行再次确认一下。**
 
+### 功能4：计算文件大小
+命令
+```
+ itools sizeFor /Users/zhanggui/zhanggui/my
+```
+计算sizeFor后面跟的参数内容所占内存大小，如果参数为文件路径，则计算文件大小，如果是文件夹，会遍历所有文件，然后计算大小。
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/ScottZg/itools. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the 
