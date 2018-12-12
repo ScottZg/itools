@@ -74,6 +74,7 @@ module Itools
             end
          }
          puts "\033[32m无用图片#{imags.size}张,图片名称如下:\033[0m"
+         unuse_total_size = 0
         Spreadsheet.client_encoding = 'utf-8'
          book = Spreadsheet::Workbook.new
          sheet1 = book.create_worksheet
@@ -81,11 +82,13 @@ module Itools
          sheet1.row(0)[1] = "文件路径"
          imags.each_with_index {|item,idx|
             sheet1.row(idx+1)[0] = item
-            sheet1.row(idx+1)[1] = imgFinder.get_image_path(item)
+            path = imgFinder.get_image_path(item)
+            sheet1.row(idx+1)[1] = path
+            unuse_total_size = unuse_total_size = File.size(path)
             puts item
         }
          book.write "#{imgFinder.find_path}/search_result.xls"
-         puts "\033[32m文件已经保存到#{imgFinder.find_path}/search_result.xls\033[0m"
+         puts "\033[32m文件已经保存到#{imgFinder.find_path}/search_result.xls,无用图片大小：#{unuse_total_size}\033[0m"
          puts "\033[32m内容仅供参考，具体还要自己通过结果查看一下\033[0m"
       end
    end
