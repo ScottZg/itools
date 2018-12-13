@@ -38,4 +38,13 @@ command :sizeFor do |c|
          Itools::Memory.sizeFor(args)
     end
 end
+
+# 查找文件
+desc "search File in folder"
+arg 'file name'
+command :searchFile do |c|
+    c.action do |global_options, options, args|
+         Itools::FileSearcher.searchFile(args)
+    end
+end
 exit run(ARGV)
