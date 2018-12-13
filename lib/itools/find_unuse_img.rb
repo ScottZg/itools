@@ -84,11 +84,11 @@ module Itools
             sheet1.row(idx+1)[0] = item
             path = imgFinder.get_image_path(item)
             sheet1.row(idx+1)[1] = path
-            unuse_total_size = unuse_total_size = File.size(path)
+            unuse_total_size = unuse_total_size + File.size(path)
             puts item
         }
          book.write "#{imgFinder.find_path}/search_result.xls"
-         puts "\033[32m文件已经保存到#{imgFinder.find_path}/search_result.xls,无用图片大小：#{unuse_total_size}\033[0m"
+         puts "\033[32m文件已经保存到#{imgFinder.find_path}/search_result.xls,无用图片大小：#{unuse_total_size}B\033[0m"
          puts "\033[32m内容仅供参考，具体还要自己通过结果查看一下\033[0m"
       end
    end
