@@ -30,25 +30,50 @@ module Itools
         end
         # 计算整个文件夹
         def cal_folder(folder)
+            print "\033[32m请输入要查找文件后缀\033[0m（例如想文件夹中图片大小则输入：{png,jpg,gif},不输入则默认计算文件夹下所有文件大小之和）:"
+            file_exts_string = STDIN.gets
+            file_exts_string.chomp!   #过滤换行符
+            if file_exts_string.size == 0
+                file_exts = []
+            else
+                file_exts = file_exts_string.split(",")
+            end
             sum = 0
             file_count = 0
+            total_count = 0
+            total_size = 0
             Find.find(folder) do |filename|
                 if File.file?(filename)
-                    sum = sum + File.size(filename)
-                    file_count = file_count + 1
-                    # puts "#{File.basename(filename)}的大小为：#{get_show_size(File.size(filename))}"
+                    total_count = total_count + 1
+                    total_size = total_size + File.size(filename)
+                    if file_exts.size == 0  #说明计算所有文件
+                        sum = sum + File.size(filename)
+                        file_count = file_count + 1
+                    elsif file_exts.include?(File.extname(filename).delete("."))   #查找指定后缀的文件
+                        sum = sum + File.size(filename)
+                        file_count = file_count + 1
+                    else
+                        #不做任何处理
+                    end
                 end
             end
-            puts "\033[32m文件夹中共#{file_count}个文件，共占用内存大小为：#{get_show_size(sum)}.\033[0m"
+            if file_exts.size == 0
+                puts "\033[32m文件夹中共#{total_count}个文件，共#{get_show_size(total_size)}\033[0m"
+            else
+                puts "\033[32m文件夹中共#{total_count}个文件，共#{get_show_size(total_size)}；找到后缀为(#{file_exts_string})的文件#{file_count}个，共#{get_show_size(sum)}.\033[0m"
+            end
+            
             # puts `du -b #{folder} | awk '{print $1}'`.to_i 
         end
         # get_show_size 
         def get_show_size(size)
-            if size > @pro * @pro
+            if size > @pro * @pro * @pro
+                return format("%.2f",(size.to_f/(@pro*@pro*@pro))) + "GB"
+             elsif size > @pro * @pro
                 return format("%.2f",(size.to_f/(@pro*@pro))) + "MB"
              elsif size > @pro
                 return format("%.2f",(size.to_f/@pro)) + "KB"
-             else
+            else
                 return size.to_s + "B"
              end
         end
