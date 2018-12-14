@@ -19,19 +19,21 @@ SYNOPSIS
     itools [global options] command [command options] [arguments...]
 
 VERSION
-    0.2.5
+    0.3.0
 
 GLOBAL OPTIONS
     --help    - Show this message
     --version - Display the program version
 
 COMMANDS
-    find       - search unuse image
-    help       - Shows a list of commands or help for one command
-    parse      - Analyze the memory footprint of each part or component in Xcode project
-    search     - search str(or strs) in some file(or folder's file)
-    searchFile - search File in folder
-    sizeFor    - calculate the memory footprint of file or folder(contain file)
+    find               - search unuse image
+    help               - Shows a list of commands or help for one command
+    parse              - Analyze the memory footprint of each part or component in Xcode project
+    search             - search str(or strs) in some file(or folder's file)
+    searchFile         - search File in folder
+    search_unuse_class - search unuse class
+    sizeFor            - calculate the memory footprint of file or folder(contain file)
+    
 ```
 
 ### 功能1：解析LinkMap
@@ -108,6 +110,15 @@ itools searchFile /Users/zhanggui/zhanggui/my-dev/search_vc  ViewController.m   
 ```
 查找/Users/zhanggui/zhanggui/my-dev/search_vc文件夹下所有的文件名包含ViewController.m的文件，并且输出到excel表格    
 
+### 功能6：查找工程中无用的文件
+命令
+```
+itools search_unuse_class /Users/zhanggui/zhanggui/my-dev/search_vc
+```
+参数为工程所在的文件夹，例如/Users/zhanggui/zhanggui/my-dev/search_vc。查出的结果可能包含category或者extension，请拿结果作为参考，不作为最终要删除的文件。
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/ScottZg/itools. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the 
+
+## Warning
+如有误删而导致的线上问题，本人概不负责！
