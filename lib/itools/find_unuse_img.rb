@@ -75,7 +75,8 @@ module Itools
          }
          puts "\033[32m无用图片#{imags.size}张,图片名称如下:\033[0m"
          unuse_total_size = 0
-        Spreadsheet.client_encoding = 'utf-8'
+       
+         Spreadsheet.client_encoding = 'utf-8'
          book = Spreadsheet::Workbook.new
          sheet1 = book.create_worksheet
          sheet1.row(0)[0] = "文件名"
