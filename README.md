@@ -19,7 +19,7 @@ SYNOPSIS
     itools [global options] command [command options] [arguments...]
 
 VERSION
-    0.3.0
+    0.4.1
 
 GLOBAL OPTIONS
     --help    - Show this message
@@ -30,9 +30,9 @@ COMMANDS
     help               - Shows a list of commands or help for one command
     parse              - Analyze the memory footprint of each part or component in Xcode project
     search             - search str(or strs) in some file(or folder's file)
-    searchFile         - search File in folder
+    search_file        - search File in folder
     search_unuse_class - search unuse class
-    sizeFor            - calculate the memory footprint of file or folder(contain file)
+    size_for           - calculate the memory footprint of file or folder(contain file)
     
 ```
 
@@ -96,9 +96,9 @@ itools find /Users/zhanggui/zhanggui/tdp
 ### 功能4：计算文件大小
 命令
 ```
-itools sizeFor /Users/zhanggui/zhanggui/my 1000
+itools size_for /Users/zhanggui/zhanggui/my 1000
 or
- itools sizeFor /Users/zhanggui/zhanggui/my 
+ itools size_for /Users/zhanggui/zhanggui/my 
 ```
 计算sizeFor后面跟的参数内容所占内存大小，如果参数为文件路径，则计算文件大小，如果是文件夹，会遍历所有文件，然后计算大小。第二个参数为计算系数（这个系数为1MB = 1024KB中的1024；windows为1024，mac为1000，不传默认为1024）。  
 在中途会提示你输入要查找的文件后缀，不输入任何则表示查找文件夹下的所有文件，输入后缀则会计算特定文件类型包含的大小，例如：png,jpg,gif，这样会计算出文件夹中三种类型格式的图片所占有内存的大小。
@@ -106,7 +106,7 @@ or
 ### 功能5：查找文件
 命令
 ```
-itools searchFile /Users/zhanggui/zhanggui/my-dev/search_vc  ViewController.m   #第二个参数现在只支持单字符串查找
+itools search_file /Users/zhanggui/zhanggui/my-dev/search_vc  ViewController.m   #第二个参数现在只支持单字符串查找
 ```
 查找/Users/zhanggui/zhanggui/my-dev/search_vc文件夹下所有的文件名包含ViewController.m的文件，并且输出到excel表格    
 
