@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    itools (0.4.4)
+    itools (0.4.5)
       bundler (~> 1.17)
       gli (~> 2.17)
       rake (~> 10.0)
