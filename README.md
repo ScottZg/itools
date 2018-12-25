@@ -19,13 +19,14 @@ SYNOPSIS
     itools [global options] command [command options] [arguments...]
 
 VERSION
-    0.4.1
+    0.4.2
 
 GLOBAL OPTIONS
     --help    - Show this message
     --version - Display the program version
 
 COMMANDS
+    count_code_line    - count lines of code
     find               - search unuse image
     help               - Shows a list of commands or help for one command
     parse              - Analyze the memory footprint of each part or component in Xcode project
@@ -33,7 +34,6 @@ COMMANDS
     search_file        - search File in folder
     search_unuse_class - search unuse class
     size_for           - calculate the memory footprint of file or folder(contain file)
-    
 ```
 
 ### 功能1：解析LinkMap
@@ -116,6 +116,15 @@ itools search_file /Users/zhanggui/zhanggui/my-dev/search_vc  ViewController.m  
 itools search_unuse_class /Users/zhanggui/zhanggui/my-dev/search_vc
 ```
 参数为工程所在的文件夹，例如/Users/zhanggui/zhanggui/my-dev/search_vc。查出的结果可能包含category或者extension，请拿结果作为参考，不作为最终要删除的文件。
+
+### 功能7：统计代码行数
+命令
+```
+itools count_code_line 文件路径/文件夹路径
+#例如
+itools count_code_line /User/zhanggui/mydemoapp  #统计mydemoapp项目的代码行数
+```
+该工具只统计了.m、.mm、.h、.cpp这几个文件，并且不包含单行注释以及空行。
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/ScottZg/itools. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the 

@@ -39,6 +39,8 @@ module Itools
                         inheritance_str = ": #{f_result.fr_name}"
                         contain_str = '@"' + f_result.fr_name + '"'
                         reference_str = "#{f_result.fr_name}.h"
+                        
+                        # if s_containet.match(/: #{f_result.fr_name}|@"#{f_result.fr_name}"|#{f_result.fr_name}.h/) != nil
                         if s_containet.include?(inheritance_str) or s_containet.include?(contain_str) or s_containet.include?(reference_str)
                             use_idxs << f_result
                             puts "#{f_result.fr_name}已使用，剩余查找文件数#{@classes.size - use_idxs.size}..."    
