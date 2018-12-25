@@ -15,7 +15,7 @@ module Itools
                         @line_number = @line_number + 1  
                     end
                 end
-                puts "\033[32m统计#{counter.file_path}结束，共#{counter.line_number}行\033[0m"
+              
                 return
             end
             if File::directory?(@file_path)
@@ -30,13 +30,12 @@ module Itools
                         end
                     end
                 end
-                puts "\033[32m统计#{counter.file_path}结束，共#{counter.line_number}行\033[0m"
                 return
             end
             puts "\033[31m找不到指定路径的文件或者文件夹，请重新输入路径\033[0m"
         end
 
-        def self.counter(args)
+        def self.count_line(args)
             file = args[0]
             if file.nil?
                 puts "\033[31m参数异常，请传入一个参数(项目目录/要统计的文件目录/要统计的文件)\033[0m"
@@ -44,6 +43,7 @@ module Itools
             end
             counter = CodeCouner.new(file)
             counter.calculate_line_number
+            puts "\033[32m统计#{counter.file_path}结束，共#{counter.line_number}行\033[0m"
         end
     end
 end

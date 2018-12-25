@@ -16,7 +16,7 @@ module Itools
                     end
                     
                     if File.extname(path).eql?(".h")
-                        ff_result = FindResult.new(File.basename(path,".h"),path)
+                        ff_result = ClassFindResult.new(File.basename(path,".h"),path)
                         @classes << ff_result
                     end
                 end
@@ -118,7 +118,7 @@ module Itools
 
 # ------------------------查找结果类------------------------
 
-    class FindResult
+    class ClassFindResult
         attr_accessor :fr_name, :fr_path
         def initialize(temp_name,temp_path)
             @fr_name = temp_name

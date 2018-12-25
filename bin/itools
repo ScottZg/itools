@@ -62,7 +62,7 @@ desc "count lines of code"
 arg 'file name or folder'
 command :count_code_line do |c|
     c.action do |global_options, options, args|
-         Itools::CodeCouner.counter(args)
+         Itools::CodeCouner.count_line(args)
     end
 end
 exit run(ARGV)
