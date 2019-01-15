@@ -16,7 +16,13 @@ echo  '''\n#TYPE类型\n#新功能       feature\n#bug修复      bugfix\n#性�
             File.open('.git/hooks/pre-commit', 'w') do |f|
                 f.puts a
             end
+            logo_path = File.join( File.dirname(__FILE__), 'temple-commit-msg.dat' )
+            content = File.read( logo_path )
+            File.open('.git/hooks/commit-msg', 'w') do |f|
+                f.puts content
+            end
             system('chmod a+x .git/hooks/pre-commit')
+            system('chmod a+x .git/hooks/commit-msg')
             puts "\033[32m配置成功，后续请直接使用git commit ,不要加 -m\033[0m"
         end
     end
