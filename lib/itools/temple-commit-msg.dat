@@ -104,7 +104,7 @@ commit_msg = CommitMsg.new(file_path,branch_name)
 if commit_msg.is_white_list_branch_type
 	puts "分支名称校验通过..."
 else
-	commit_msg.fail_with_msg("分支名称不符合规则，请按照约定规则处理，更多参见：https://wiki.maoyan.com/pages/viewpage.action?pageId=44292361")
+	commit_msg.fail_with_msg("分支名称不符合规则，请按照约定规则处理")
 end
 
 if commit_msg.verify_content
