@@ -1,0 +1,112 @@
+#!/usr/bin/env ruby
+require 'find'
+class CommitMsg
+	attr_accessor :edit_file_path, :branch_name
+	def initialize(editing_file_path,branch_name)
+		@edit_file_path = editing_file_path
+		@branch_name = branch_name		
+	end
+
+	# type 规范判断
+	def is_white_list_branch_type
+		if @branch_name.match(/^(feature|bugfix|refactor|pref|hotfix|release|docs)\//)
+			return true
+		else
+			return false
+		end
+	end
+	# subject校验
+	def verify_subject(str)
+		subject = ''
+		contain_subs = str.split(" ")
+		if contain_subs.size == 2  #理想情况，也是大多数情况，只取subject即可
+			subject = contain_subs[1]
+		elsif contain_subs.size == 1
+			subject = str.gsub(/#{@branch_name}/,"")
+		else
+			contain_subs.delete_at(0)
+			subject = contain_subs.join("")   #把剩下的数据组合起来
+		end
+		if subject.size > 50
+			fail_with_msg("subject内容过长，请不要超过50个字")
+		elsif subject == "subject"
+			fail_with_msg("请完善subject的内容")
+		else
+			puts "subject校验通过..."
+		end
+	end
+	# cause校验
+	def verify_cause(str)
+		if str.strip.size > 6
+			puts "Cause校验通过..."
+		else
+			fail_with_msg("请完善Cause内容")
+		end
+	end
+	#solution校验
+	def verify_solution(str)
+		if str.strip.size > 9
+			puts "Solution校验通过..."
+		else
+			fail_with_msg("请完善Solution内容")
+		end
+	end
+	# doc address校验
+	def verify_doc_address(str)
+		if str.strip.size > 21
+			puts "Doc Address校验通过..."
+		else
+			fail_with_msg("请完善Doc Address内容")
+		end
+	end
+
+	# 逐行校验
+	def handle_line(line)
+		handle_line_method = ''
+		if line.match(/^#{@branch_name.strip}/)
+			handle_line_method = 'verify_subject'
+		elsif line.match(/^Cause/)
+			handle_line_method = 'verify_cause'
+		elsif line.match(/^Solution/)
+			handle_line_method = 'verify_solution'
+		elsif line.match(/^Releated Doc Address/)
+			handle_line_method = 'verify_doc_address'
+		else
+			fail_with_msg("系统错误")
+		end
+		self.send(handle_line_method,line)
+	end
+# 校验commit message内容是否符合规范
+	def verify_content
+		if File.file?(@edit_file_path)
+			File.read(@edit_file_path).each_line do |line|
+				match_data = line.match(/^#|^$/)
+				if match_data == nil   #过滤注释内容
+					handle_line(line)
+				end
+			end
+		end
+	end
+	# faile method
+	def fail_with_msg(msg)
+		puts "\033[31m#{msg}\033[0m"
+		puts "\033[31mcommit fail!\033[0m"
+		exit 1
+	end
+end
+
+puts "commit message校验中..."
+branch_name = `git symbolic-ref --short HEAD` 
+file_path = ARGV[0]
+commit_msg = CommitMsg.new(file_path,branch_name)
+# 校验分支名是否符合规范，这里没有对taskid进行校验
+# -------------------------------type校验-------------------------------
+if commit_msg.is_white_list_branch_type
+	puts "分支名称校验通过..."
+else
+	commit_msg.fail_with_msg("分支名称不符合规则，请按照约定规则处理，更多参见：https://wiki.maoyan.com/pages/viewpage.action?pageId=44292361")
+end
+
+if commit_msg.verify_content
+	puts "\033[32mcommit success!\033[0m"
+end
