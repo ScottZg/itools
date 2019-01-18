@@ -11,7 +11,7 @@ echo "" >> `pwd`/.git/commit_msg
 echo "Cause:" >> `pwd`/.git/commit_msg
 echo "Solution:" >> `pwd`/.git/commit_msg
 echo "Releated Doc Address:" >> `pwd`/.git/commit_msg
-echo  '''\n#TYPE类型\n#新功能       feature\n#bug修复      bugfix\n#性能优化     perf\n#代码重构     refactor\n#线上修复     hotfix\n#发布版本     release\n#文档biangeng     docs''' >> `pwd`/.git/maoyancommit
+echo  '''\n#TYPE类型\n#新功能       feature\n#bug修复      bugfix\n#性能优化     perf\n#代码重构     refactor\n#线上修复     hotfix\n#发布版本     release\n#文档变更     docs''' >> `pwd`/.git/commit_msg
             EOF
             File.open('.git/hooks/pre-commit', 'w') do |f|
                 f.puts a
