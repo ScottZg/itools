@@ -11,7 +11,12 @@ desc "解析linkmap"
 arg 'xxx.txt'
 command :parse do |c|
     c.action do |global_options, options, args|
-         Itools::LinkMap.parser(args[0])
+        if args.size == 1
+            Itools::LinkMap.parser(args[0])   
+        else
+            Itools::LinkMap.parser_by_folder(args)
+        end
+         
     end
 end
 

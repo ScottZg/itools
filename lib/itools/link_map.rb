@@ -1,12 +1,17 @@
 require 'fileutils'
 require 'pathname'
-
+require 'find'
 module Itools
    # ---------------------------------ObjectFile class---------------------------------
    class ObjectFile
-      attr_accessor :serial_number, :file_path, :file_name
+      # file_size:单个文件的大小
+      # o_name：某个文件的名字
+      # o_size: 某个o文件的大小
+      attr_accessor :serial_number, :file_path, :file_name, :file_size, :o_name, :o_size
       def initialize()
          @serial_number = []
+         @file_size = 0
+         @o_size = 0
       end
 
    end
@@ -53,7 +58,17 @@ module Itools
             obj_file.serial_number = tempSplit[0].delete("[").strip.to_i   #设置serial_number
             obj_file.file_path = tempSplit[1].strip
             obj_file.file_name = tempSplit[1].split("/").last.chomp
+            obj_file.o_name = get_o_name(tempSplit[1].split("/").last.chomp)
             l_obj_files << obj_file
+         end
+      end
+      # 得到o_ame  有待优化，可以使用正则表达式处理TODO
+      def get_o_name(str)
+         temp_arr = str.split("(")
+         if temp_arr.size > 1
+            temp_arr[1].split(".o)")[0]
+         else
+            return temp_arr[0].split(".o")[0]
          end
       end
       # 处理sections
@@ -131,6 +146,7 @@ module Itools
 
          end
       end
+      # 对linkmap进行解析，然后输出结果
       def self.parser(path_para)
          start_time = Time.now.to_i    #程序开始执行时间（以毫秒为单位）
          # 获取link map file's name
@@ -138,8 +154,8 @@ module Itools
          puts "获取的文件路径为：#{link_map_file_name}"
          if link_map_file_name.nil?
             puts "请按照如下命令执行该脚本："
-            puts "\033[31mruby linkMapParse.rb **.txt \033[0m"
-            puts "**指代Link Map File的名字，例如LinkMapApp-LinkMap-normal-x86_64.txt"
+            puts "\033[31mitools parse  **.txt \033[0m"
+            puts "**指代Link Map File的名字，例如LinkMapApp-LinkMap-normal-x86_64.txt,parse后面为绝对路径"
             return
          end
          if File.exist?(link_map_file_name)
@@ -223,10 +239,88 @@ module Itools
          puts "\033[32m整个程序执行时间为：#{end_time - start_time}秒\033[0m"
       end
 
+      # 根据linkmap && folder计算占用
+      # 第一个参数为linkmap路径，第二个参数为要分析的项目文件夹
+      def self.parser_by_folder(args)
+         link_map_file_name = args[0]    #linkmap文件路径
+         project_folder = args[1] #项目文件夹
+         # 对参数进行校验
+         if File::directory?(project_folder)
+            puts "获取的项目目录路径为：#{project_folder}"
+         else
+            puts "\033[31m#{project_folder}文件夹不存在，请重新输入 \033[0m"
+            return
+         end
+         if File.exist?(link_map_file_name)
+            puts "获取的linkmap文件路径为：#{link_map_file_name}"
+            puts "\033[32m获取LinkMap文件: #{link_map_file_name}成功，开始分析数据...\033[0m"
+         else
+            puts "\033[31m#{link_map_file_name}文件不存在，请重新输入 \033[0m"
+            return
+         end
+         # 开始处理数据
+         link_map = LinkMap.new(link_map_file_name)
+         link_map.handle_map #处理文件为对象，然后继续后续操作
+         link_map.handle_l_sym_map  #处理symbols为hashmap
+
+         # 所有的文件
+         link_map.l_obj_files
+         # 所有的symbols
+         link_map.l_symbols
+
+         # 处理得到每个obj_file的大小
+         link_map.l_obj_files.each do |obj|
+            if link_map.l_sym_map[obj.serial_number]
+               link_map.l_sym_map[obj.serial_number].each do |symb|
+                  obj.o_size = obj.o_size + symb.s_size.hex
+               end
+            end
+         end
+         # key为文件名，value为ojbect
+         sort_by_obj_files_map = link_map.l_obj_files.group_by(&:o_name)
+         size_results = [] #盛放计算结果
+         size_files = []
+         space_index = 0
+         puts "计算开始"
+         traverse_dir(sort_by_obj_files_map,project_folder,size_results,size_files,space_index)
+         size_results.reverse!
+         # 存储为文件
+         save_file_path = SizeResult.getSaveFileName(project_folder)
+         if File.exist?(save_file_path)
+            File.delete(save_file_path)
+         end
+         save_file = File.new(save_file_path,"w+")
+         size_results.each do |o|
+            save_file.puts("#{' ' * o.space_count}|- #{o.folder_name.split('/').last}    #{SizeResult.handleSize(o.size)}")
+         end
+         save_file.close
+         puts "分析结果已经保存为文件，位置为：\n\033[32m#{save_file_path}\033[0m"
+      end
+      def self.traverse_dir(sort_by_obj_files_map,file_path,results,size_files,space_index)
+         s_result = SizeResult.new
+         s_result.folder_name = file_path  
+         space_index = space_index + 2 
+         file_name_arr = [] #盛放计算过的类
+         Find.find(file_path) do |file|
+            if File.file?(file)
+               file_name = File.basename(file,".*")
+               if !file_name_arr.include?(file_name) && sort_by_obj_files_map[file_name] #没有已经计算过
+                  s_result.size = s_result.size + sort_by_obj_files_map[file_name][0].o_size
+                  file_name_arr << file_name
+               end
+            elsif File::directory?(file) && file != file_path
+               traverse_dir(sort_by_obj_files_map,file,results,size_files,space_index)
+            end
+         end
+         if s_result.size > 0 && !size_files.include?(s_result.folder_name)
+            s_result.space_count = space_index
+            results << s_result
+            size_files << s_result.folder_name
+         end
+      end
    end
-   # --------------------------------- Size utils class ---------------------------------
    class SizeResult
-      attr_accessor :file_name, :file_serial_numers, :size
+      attr_accessor :file_name, :file_serial_numers, :size,:folder_name, :space_count
       def initialize
          @file_serial_numers = []
          @size = 0
@@ -248,5 +342,7 @@ module Itools
          save_file_path = path.dirname.to_s + "/" + "parse_" + path.basename.to_s + "_result.txt"
          return save_file_path
       end
-   end
+   end   
 end
+
+# --------------------------------- Size utils class ---------------------------------
