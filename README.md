@@ -19,21 +19,22 @@ SYNOPSIS
     itools [global options] command [command options] [arguments...]
 
 VERSION
-    0.4.2
+    0.4.9
 
 GLOBAL OPTIONS
     --help    - Show this message
     --version - Display the program version
 
 COMMANDS
-    count_code_line    - count lines of code
-    find               - search unuse image
+    count_code_line    - 统计代码行数
+    find               - 查找无用图片
     help               - Shows a list of commands or help for one command
-    parse              - Analyze the memory footprint of each part or component in Xcode project
-    search             - search str(or strs) in some file(or folder's file)
-    search_file        - search File in folder
-    search_unuse_class - search unuse class
-    size_for           - calculate the memory footprint of file or folder(contain file)
+    parse              - 解析linkmap
+    pre_commit         - 通过执行该命令，hook 本地commit，然后进行规范化
+    search             - 在文件夹或文件中查找字符串（或者字符串组）
+    search_file        - 查找文件
+    search_unuse_class - 查找无用类
+    size_for           - 计算文件或者文件夹占用内存大小
 ```
 
 ### 功能1：解析LinkMap
