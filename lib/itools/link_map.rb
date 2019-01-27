@@ -278,6 +278,17 @@ module Itools
          end
          # key为文件名，value为ojbect
          sort_by_obj_files_map = link_map.l_obj_files.group_by(&:o_name)
+         # save_file_path = SizeResult.getSaveFileName(project_folder)
+         # save_file = File.new(save_file_path,"w+")
+         # sort_by_obj_files_map.keys.each do |sss|
+
+         #    save_file.puts("#{sort_by_obj_files_map[sss][0].o_name}   #{sort_by_obj_files_map[sss][0].o_size}")
+         # end
+         # save_file.close
+         # exit
+
+
+
          size_results = [] #盛放计算结果
          size_files = []
          space_index = 0
