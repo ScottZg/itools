@@ -58,9 +58,9 @@ module Itools
                 end
             end
             if file_exts.size == 0
-                puts "\033[32m文件夹中共#{total_count}个文件，共#{get_show_size(total_size)}\033[0m"
+                puts "\033[32m文件夹中共#{total_count}个文件，共#{get_show_size(total_size)}(#{total_size})\033[0m"
             else
-                puts "\033[32m文件夹中共#{total_count}个文件，共#{get_show_size(total_size)}；找到后缀为(#{file_exts_string})的文件#{file_count}个，共#{get_show_size(sum)}.\033[0m"
+                puts "\033[32m文件夹中共#{total_count}个文件，共#{get_show_size(total_size)}(#{total_size})；找到后缀为(#{file_exts_string})的文件#{file_count}个，共#{get_show_size(sum)}(#{total_size}).\033[0m"
             end
             
             # puts `du -b #{folder} | awk '{print $1}'`.to_i 

@@ -232,7 +232,7 @@ module Itools
          # 打印结果
          sizeResultArr.each do |obj|
             puts "#{obj.file_name}          " + SizeResult.handleSize(obj.size)
-            save_file.puts("#{obj.file_name}          #{SizeResult.handleSize(obj.size)}")
+            save_file.puts("#{obj.file_name}          #{SizeResult.handleSize(obj.size)}(#{obj.size})")
          end
          save_file.puts("总大小为：#{SizeResult.handleSize(total_size)}")
          save_file.close
@@ -308,7 +308,7 @@ module Itools
          save_file = File.new(save_file_path,"w+")
          o_index = 2
          size_results.each do |o|
-            result_str = "#{' ' * o.space_count}├── #{o.folder_name.split('/').last}    #{SizeResult.handleSize(o.size)}"
+            result_str = "#{' ' * o.space_count}├── #{o.folder_name.split('/').last}    #{SizeResult.handleSize(o.size)}(#{o.size})"
             save_file.puts(result_str)
          end
          save_file.close
@@ -320,7 +320,8 @@ module Itools
          space_index = space_index + 2 
          file_name_arr = [] #盛放计算过的类
          Find.find(file_path) do |file|
-            if File.file?(file)
+            # 不包含图片
+            if File.file?(file) && !(File.extname(file) =~ /(png|gif|jpg|bmp|jpeg)/)
                file_name = File.basename(file,".*")
                if !file_name_arr.include?(file_name) && sort_by_obj_files_map[file_name] #没有已经计算过
                   s_result.size = s_result.size + sort_by_obj_files_map[file_name][0].o_size
