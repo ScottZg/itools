@@ -138,6 +138,11 @@ module Itools
                   handle_method_name = "handle_sections"
                   puts "处理Sections..."
                elsif line.include?("Symbols:")   #symbols:和Dead Stripped Symbols处理一样
+               #   这里不处理Dead Stripped Symbols
+                  if line.delete('#').strip.include?("Dead Stripped Symbols")
+                     puts "不处理处理#{line.delete('#').strip}..."
+                     break
+                  end
                   puts "处理#{line.delete('#').strip}..."
                   handle_method_name = "handle_symbols"
                end
@@ -301,8 +306,10 @@ module Itools
             File.delete(save_file_path)
          end
          save_file = File.new(save_file_path,"w+")
+         o_index = 2
          size_results.each do |o|
-            save_file.puts("#{' ' * o.space_count}|- #{o.folder_name.split('/').last}    #{SizeResult.handleSize(o.size)}")
+            result_str = "#{' ' * o.space_count}├── #{o.folder_name.split('/').last}    #{SizeResult.handleSize(o.size)}"
+            save_file.puts(result_str)
          end
          save_file.close
          puts "分析结果已经保存为文件，位置为：\n\033[32m#{save_file_path}\033[0m"
@@ -350,7 +357,7 @@ module Itools
       def self.getSaveFileName(path_para)
          path = Pathname.new(path_para)
          # 要保存的地址
-         save_file_path = path.dirname.to_s + "/" + "parse_" + path.basename.to_s + "_result.txt"
+         save_file_path = path.dirname.to_s + "/" + "parse_" + path.basename.to_s + "_result(#{Time.new.strftime("%Y%m%d%H%M%S")}).txt"
          return save_file_path
       end
    end   
