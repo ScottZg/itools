@@ -28,7 +28,6 @@ GLOBAL OPTIONS
 COMMANDS
     count_code_line    - 统计代码行数
     find               - 查找无用图片
-    help               - Shows a list of commands or help for one command
     parse              - 解析linkmap
     pre_commit         - 通过执行该命令，hook 本地commit，然后进行规范化
     search             - 在文件夹或文件中查找字符串（或者字符串组）
