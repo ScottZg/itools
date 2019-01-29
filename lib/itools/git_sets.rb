@@ -1,3 +1,4 @@
+require 'git'
 module Itools
     class GitSets
         def self.commit_msg_init(args)
@@ -24,6 +25,19 @@ echo  '''\n#TYPE类型\n#新功能       feature\n#bug修复      bugfix\n#性�
             system('chmod a+x .git/hooks/pre-commit')
             system('chmod a+x .git/hooks/commit-msg')
             puts "\033[32m配置成功，后续请直接使用git commit ,不要加 -m\033[0m"
+        end
+        # 生成changelog 
+        def self.get_changelog(args)
+            puts "生成changelog"
+            g = Git.open(".")
+            puts g.repo
+            # g.log.each {|gl|
+            #     commit = g.gcommit(gl)
+            #     puts commit.message
+
+            #     break
+
+            # }
         end
     end
  end 

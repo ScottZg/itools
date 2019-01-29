@@ -79,4 +79,12 @@ command :pre_commit do |c|
         Itools::GitSets.commit_msg_init(args)
     end
 end
+#本地生成changelog
+desc "通过执行该命令，根据commit生成changelog"
+arg 'git根目录'
+command :changelog do |c|
+    c.action do |global_options,options, args|
+        Itools::GitSets.get_changelog(args)
+    end
+end
 exit run(ARGV)
