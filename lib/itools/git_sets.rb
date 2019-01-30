@@ -30,13 +30,18 @@ echo  '''\n#TYPE类型\n#新功能       feature\n#bug修复      bugfix\n#性�
         def self.get_changelog(args)
             puts "生成changelog"
             g = Git.open(".")
+            p g.log
+            index = 0
             g.log.each {|gl|
-                commit = g.gcommit(gl)
-                puts commit.message
+                puts gl.sha
+                index = index + 1
+                # commit = g.gcommit(gl)
+                # puts commit.message
 
-                break
+                # break
 
             }
+            p index
         end
     end
  end 
