@@ -1,4 +1,5 @@
 require 'find'
+require 'json'
 module Itools
     class ClassFinder
         attr_accessor :search_path, :classes, :search_in_files

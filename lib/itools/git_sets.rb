@@ -30,9 +30,8 @@ echo  '''\n#TYPE类型\n#新功能       feature\n#bug修复      bugfix\n#性�
         def self.get_changelog(args)
             puts "生成changelog"
             g = Git.open(".")
-            p g.log
             index = 0
-            g.log.each {|gl|
+            g.log.between('feature/add_changelog_gen','master').each {|gl|
                 puts gl.sha
                 index = index + 1
                 # commit = g.gcommit(gl)
@@ -40,7 +39,8 @@ echo  '''\n#TYPE类型\n#新功能       feature\n#bug修复      bugfix\n#性�
 
                 # break
 
-            }
+                }
+            # g.log
             p index
         end
     end
