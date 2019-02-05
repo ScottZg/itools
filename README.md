@@ -19,7 +19,7 @@ SYNOPSIS
     itools [global options] command [command options] [arguments...]
 
 VERSION
-    0.4.9
+    1.0.0
 
 GLOBAL OPTIONS
     --help    - Show this message
@@ -40,7 +40,7 @@ COMMANDS
 ### 功能1：解析LinkMap
 命令：
 ```shell
-itools parse  LinkMapDemo-LinkMap-normal-arm64.txt  
+itools parse  LinkMapDemo-LinkMap-normal-arm64.txt (分析文件夹) 
 # or
 itools parse /user/Desk/LinkMapDemo-LinkMap-normal-arm64.txt
 ```
@@ -56,8 +56,8 @@ Foundation.tbd          24B
 UIKit.tbd          24B
 Total Size：10.07KB
 ```
-For more information, see：[https://www.cnblogs.com/zhanggui/p/9991455.html](https://www.cnblogs.com/zhanggui/p/9991455.html)
-
+For more information, see：[https://www.cnblogs.com/zhanggui/p/9991455.html](https://www.cnblogs.com/zhanggui/p/9991455.html)   
+也可以根据linkmap按照folder解析，即传入第二个参数为分析的引用库目录，例如想查看AFNetWorking中各个文件夹(内容)所占二进制的大小。
 ### 功能2：字符串查找
 命令
 ```ruby
