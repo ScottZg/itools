@@ -79,4 +79,13 @@ command :pre_commit do |c|
         Itools::GitSets.commit_msg_init(args)
     end
 end
+
+#本地commit规范化
+desc "查找重复文件，查看某个目录下面是否有重复文件"
+arg '目录'
+command :find_duplicate_file do |c|
+    c.action do |global_options,options, args|
+        Itools::FileSearcher.find_duplicate_file(args)
+    end
+end
 exit run(ARGV)

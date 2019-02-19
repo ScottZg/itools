@@ -34,7 +34,38 @@ module Itools
                 puts "\033[31m文件夹有误，请输入文件夹路径作为第一个参数\033[0m"
             end
         end
-        # 对外暴露方法
+        def find_duplicate
+            puts "\033[32m开始查找...\033[0m"   
+            have_files = []
+            if File::directory?(@path)
+                Find.find(@path) do |file|
+                    if File.file?(file)
+                        file_name = File.basename(file)
+                        if have_files.include?(file_name)
+                            temp_result = FileResult.new(file,file_name)
+                            @search_result << temp_result  
+                        else
+                            have_files << file_name
+                        end
+                       
+                    end
+                end
+                
+            else
+                puts "\033[31m文件夹有误，请输入文件夹路径作为第一个参数\033[0m"
+            end
+        end
+
+        # 查找重复文件--------------------------
+        def self.find_duplicate_file(args) 
+            path = args[0]
+            file_searcher = FileSearcher.new(path,'')
+            file_searcher.find_duplicate()
+            file_searcher.search_result.each_with_index{ |itme,index|
+                puts itme.file_name
+            }
+        end
+        # 对外暴露方法--------------------------
         def self.searchFile(args)
             path = args[0]
             files = args[1]
