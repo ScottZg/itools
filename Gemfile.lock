@@ -1,8 +1,7 @@
 PATH
   remote: .
   specs:
-    itools (1.0.0)
-
+    itools (1.1.1)
       bundler (~> 1.17)
       git (~> 1.5)
       gli (~> 2.17)
