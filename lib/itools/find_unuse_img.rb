@@ -81,11 +81,13 @@ module Itools
          sheet1 = book.create_worksheet
          sheet1.row(0)[0] = "文件名"
          sheet1.row(0)[1] = "文件路径"
+         sheet1.row(0)[2] = "文件大小(B)"
          imags.each_with_index {|item,idx|
             sheet1.row(idx+1)[0] = item
             path = imgFinder.get_image_path(item)
             sheet1.row(idx+1)[1] = path
             unuse_total_size = unuse_total_size + File.size(path)
+            sheet1.row(idx+1)[2] = File.size(path)
             puts item
         }
          book.write "#{imgFinder.find_path}/search_result.xls"
