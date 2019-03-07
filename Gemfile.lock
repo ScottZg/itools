@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    itools (1.1.1)
+    itools (1.1.2)
       bundler (~> 1.17)
       git (~> 1.5)
       gli (~> 2.17)
@@ -15,7 +15,7 @@ GEM
     gli (2.18.0)
     rake (10.5.0)
     ruby-ole (1.2.12.1)
-    spreadsheet (1.1.9)
+    spreadsheet (1.2.0)
       ruby-ole (>= 1.0)
 
 PLATFORMS
