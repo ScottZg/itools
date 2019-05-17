@@ -42,6 +42,7 @@ module Itools
             file_count = 0
             total_count = 0
             total_size = 0
+            file_size = 0
             Find.find(folder) do |filename|
                 if File.file?(filename)
                     total_count = total_count + 1
@@ -52,6 +53,7 @@ module Itools
                     elsif file_exts.include?(File.extname(filename).delete("."))   #查找指定后缀的文件
                         sum = sum + File.size(filename)
                         file_count = file_count + 1
+                        file_size = file_size + File.size(filename)
                     else
                         #不做任何处理
                     end
@@ -60,7 +62,7 @@ module Itools
             if file_exts.size == 0
                 puts "\033[32m文件夹中共#{total_count}个文件，共#{get_show_size(total_size)}(#{total_size})\033[0m"
             else
-                puts "\033[32m文件夹中共#{total_count}个文件，共#{get_show_size(total_size)}(#{total_size})；找到后缀为(#{file_exts_string})的文件#{file_count}个，共#{get_show_size(sum)}(#{total_size}).\033[0m"
+                puts "\033[32m文件夹中共#{total_count}个文件，共#{get_show_size(total_size)}(#{total_size})；找到后缀为(#{file_exts_string})的文件#{file_count}个，共#{get_show_size(file_size)}(#{file_size}).\033[0m"
             end
             
             # puts `du -b #{folder} | awk '{print $1}'`.to_i 

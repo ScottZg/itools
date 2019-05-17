@@ -64,6 +64,7 @@ module Itools
             sheet1.row(0)[0] = "序号"
             sheet1.row(0)[1] = "文件名"
             sheet1.row(0)[2] = "文件路径"
+            sheet1.row(0)[3] = "文件占用内存大小"
             total_size = 0
             @classes.each_with_index{|r_item,f_index| 
                 # if !r_item.fr_name.include?("+")
