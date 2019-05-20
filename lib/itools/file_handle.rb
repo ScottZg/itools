@@ -1,6 +1,8 @@
 require 'find'
 require 'spreadsheet'
+require 'digest'
 module Itools
+    #-------------------------查找文件用到的结果类-------------------------------------
     class FileResult
         attr_accessor :keyword, :file_path, :file_name
         def initialize(temp_path,temp_name)
@@ -8,6 +10,15 @@ module Itools
             @file_name = temp_name
         end
     end
+    # -------------------------查找重复文件用到的结果类-------------------------------------
+    class DuplicateFileResult
+        attr_accessor :file_name, :file_paths
+        def initialize(temp_file_name)
+            @file_name = temp_file_name
+            @file_paths = []
+        end
+    end
+    #--------------------------------------------------------------
     class FileSearcher
         # path：搜索的路径，files要搜索的文件，支持数组用逗号隔开即可。支持模糊搜索
         attr_accessor :path ,:files, :search_result
@@ -33,6 +44,38 @@ module Itools
             else
                 puts "\033[31m文件夹有误，请输入文件夹路径作为第一个参数\033[0m"
             end
+        end
+        # 查找重复文件
+        def duplicate
+            puts "\033[32m开始查找...\033[0m"
+            file_names = []
+            file_paths = []
+            if File::directory?(@path)
+                Find.find(@path) do |file|
+                    if File.file?(file) && !File.basename(file,".*").eql?(File.basename(file))  # 只查找重复文件 ,不包含隐藏文件
+                        file_name = File.basename(file)
+                        md5V = Digest::MD5.hexdigest(File.open(file,"r"){|fs| fs.read})
+                        if file_names.include?(md5V)  # 包含了重复文件
+                            puts "包含了重复文件：#{file_name},路径为：#{file},大小：#{File.size(file)}B"
+                        else  # 暂时不再数组中
+                            file_names << md5V
+                            file_paths << file
+                        end
+                    end
+                end
+            else
+                puts "\033[31m文件夹有误，请将参数设置为文件夹\033[0m"
+            end 
+        end
+        # 查找重复文件对外暴露方法
+        def self.duplicate_find(args)
+            path = args[0]
+            if path.nil?
+                puts "\033[31m请添写文件夹\033[0m"
+                return
+            end
+            duplicate_finder = FileSearcher.new(path, '')
+            duplicate_finder.duplicate
         end
         # 对外暴露方法
         def self.searchFile(args)

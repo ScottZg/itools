@@ -79,4 +79,11 @@ command :pre_commit do |c|
         Itools::GitSets.commit_msg_init(args)
     end
 end
+desc "查找重复文件"
+arg "要查找的目录"
+command :duplicate do |c|
+    c.action do |global_options, options, args|
+        Itools:: FileSearcher.duplicate_find(args)
+    end
+end
 exit run(ARGV)
