@@ -79,4 +79,12 @@ command :pre_commit do |c|
         Itools::GitSets.commit_msg_init(args)
     end
 end
+#本地commit规范化
+desc "通过执行该命令，可以将podfile.lock中所有的依赖平铺至Podifle中"
+arg 'podfile.lock'
+command :podfile_tiled do |c|
+    c.action do |global_options,options, args|
+        Itools::PodfileTiled.podfile_tiled(args)
+    end
+end
 exit run(ARGV)
