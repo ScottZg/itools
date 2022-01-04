@@ -57,10 +57,9 @@ module Itools
             else
               pod_name = line_string.delete('-').lstrip.rstrip
             end
-  
-            if pod_name.length == 0 || pod_name.include?('/')
-                next
-            end
+            # if pod_name.length == 0 || pod_name.include?('/')
+            #     next
+            # end
             temp_pod = PodInfo.new(pod_name, pod_version)
             if pod_version
                 temp_pod.pod_version = pod_version.delete('=').strip 
@@ -73,7 +72,11 @@ module Itools
         temp_exist_pods = []
         all_pods.each do |all_pod|
           exist_pods.each do |exist_pod|
-            if all_pod.pod_name == exist_pod.pod_name
+            exist_pod_name = exist_pod.pod_name
+            if exist_pod_name.include?('/')
+              exist_pod_name = exist_pod_name.split('/')[0]
+            end
+            if all_pod.pod_name == exist_pod_name
               temp_exist_pods << all_pod
             end
           end
