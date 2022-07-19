@@ -48,7 +48,7 @@ module Itools
                   imgFinder.image_count = imgFinder.image_count + 1
                   imageResult = FindResult.new(Image.get_image_name(File.basename(filename,".*")),filename)
                   imgFinder.images << imageResult
-               elsif File.extname(filename).eql?(".m")
+               elsif File.extname(filename).eql?(".m") || File.extname(filename).eql?(".swift")
                   imgFinder.search_files << filename
                end
             end
