@@ -239,6 +239,7 @@ module Itools
          sheet1.row(idx+1)[0] = item.file_name
          sheet1.row(idx+1)[1] = item.size
          sheet1.row(idx+1)[2] = SizeResult.handleSize(item.size)
+         puts "#{item.file_name}          " + SizeResult.handleSize(item.size)
       }
       book.write "#{save_file_path}"
          # save_file = File.new(save_file_path,"w+")
