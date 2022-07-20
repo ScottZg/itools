@@ -1,6 +1,7 @@
 require 'fileutils'
 require 'pathname'
 require 'find'
+require 'spreadsheet'
 module Itools
    # ---------------------------------ObjectFile class---------------------------------
    class ObjectFile
@@ -228,14 +229,26 @@ module Itools
          end
 
          # 创建要保存数据的文件
-         save_file = File.new(save_file_path,"w+")
-         # 打印结果
-         sizeResultArr.each do |obj|
-            puts "#{obj.file_name}          " + SizeResult.handleSize(obj.size)
-            save_file.puts("#{obj.file_name}          #{SizeResult.handleSize(obj.size)}(#{obj.size})")
-         end
-         save_file.puts("总大小为：#{SizeResult.handleSize(total_size)}")
-         save_file.close
+         Spreadsheet.client_encoding = 'utf-8'
+         book = Spreadsheet::Workbook.new
+         sheet1 = book.create_worksheet
+         sheet1.row(0)[0] = "文件名"
+         sheet1.row(0)[1] = "文件大小(B)"
+         sheet1.row(0)[2] = "文件大小"
+         sizeResultArr.each_with_index{|item, idx|
+         sheet1.row(idx+1)[0] = item.file_name
+         sheet1.row(idx+1)[1] = item.size
+         sheet1.row(idx+1)[2] = SizeResult.handleSize(item.size)
+      }
+      book.write "#{save_file_path}"
+         # save_file = File.new(save_file_path,"w+")
+         # # 打印结果
+         # sizeResultArr.each do |obj|
+         #    puts "#{obj.file_name}          " + SizeResult.handleSize(obj.size)
+         #    save_file.puts("#{obj.file_name}          #{SizeResult.handleSize(obj.size)}(#{obj.size})")
+         # end
+         # save_file.puts("总大小为：#{SizeResult.handleSize(total_size)}")
+         # save_file.close
          puts "总大小为(仅供参考)：#{SizeResult.handleSize(total_size)}"
          puts "\033[32m--------------------------------\033[0m"
          end_time = Time.now.to_i   #程序执行结束时间
@@ -358,7 +371,7 @@ module Itools
       def self.getSaveFileName(path_para)
          path = Pathname.new(path_para)
          # 要保存的地址
-         save_file_path = path.dirname.to_s + "/" + "parse_" + path.basename.to_s + "_result(#{Time.new.strftime("%Y%m%d%H%M%S")}).txt"
+         save_file_path = path.dirname.to_s + "/" + "parse_" + path.basename.to_s + "_result(#{Time.new.strftime("%Y%m%d%H%M%S")}).xls"
          return save_file_path
       end
    end   
